@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 
 import type { NextPage } from "next";
-import { signIn, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
 import Router from "next/router";
 
 const Home: NextPage = () => {
@@ -11,7 +10,8 @@ const Home: NextPage = () => {
   // const loading = status === "loading";
 
   useEffect(() => {
-    if (session) Router.push("/profile");
+    if (!session) Router.push("/");
+    console.log(session);
   }, [session]);
 
   return (
@@ -22,21 +22,19 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="mb-2 text-3xl font-bold">Welcome to keyclaok 👋</h1>
-        <p className="mb-3 text-lg">Hi there, click on the button below to login.</p>
+        <h1 className="mb-2 text-3xl font-bold">Hi, {session?.user?.name?.split(" ")[0]} 👋</h1>
+        <p className="mb-5 text-lg">
+          Logged in with <b>{session?.user?.email}</b>
+        </p>
         <button
-          className="my-2 rounded-full bg-blue-500 px-4 pt-1 pb-2 text-white"
+          className="rounded-full bg-red-600 px-4 pt-1 pb-2 text-white"
           onClick={e => {
             e.preventDefault();
-            signIn("keycloak");
+            signOut();
           }}
         >
-          Continue to sign-in
+          Sign-out
         </button>
-
-        <Link className="my-2 rounded-full bg-red-500 px-4 pt-1 pb-2 text-white" href="">
-          Use google account
-        </Link>
       </main>
     </div>
   );
