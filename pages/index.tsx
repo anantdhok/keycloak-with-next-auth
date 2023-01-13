@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import type { NextPage } from "next";
 import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
-import Link from "next/link";
 import Router from "next/router";
 
 const Home: NextPage = () => {
@@ -25,7 +24,7 @@ const Home: NextPage = () => {
         <h1 className="mb-2 text-3xl font-bold">Welcome to keyclaok 👋</h1>
         <p className="mb-3 text-lg">Hi there, click on the button below to login.</p>
         <button
-          className="my-2 rounded-full bg-blue-500 px-4 pt-1 pb-2 text-white"
+          className="my-2 w-[200px] rounded-full bg-blue-500 pt-1 pb-2 text-white"
           onClick={e => {
             e.preventDefault();
             signIn("keycloak");
@@ -34,9 +33,28 @@ const Home: NextPage = () => {
           Continue to sign-in
         </button>
 
-        <Link className="my-2 rounded-full bg-red-500 px-4 pt-1 pb-2 text-white" href="">
-          Use google account
-        </Link>
+        <p className="text-gray my-2 text-sm">Or, continue with</p>
+
+        <span className="flex flex-col">
+          <button
+            className="my-2 w-[200px] rounded-full bg-red-500 pt-1 pb-2 text-white"
+            onClick={e => {
+              e.preventDefault();
+              signIn("keycloak", {}, { kc_idp_hint: "google" });
+            }}
+          >
+            Google account
+          </button>
+          <button
+            className="my-2 w-[200px] rounded-full bg-red-500 pt-1 pb-2 text-white"
+            onClick={e => {
+              e.preventDefault();
+              signIn("keycloak", {}, { kc_idp_hint: "facebook" });
+            }}
+          >
+            Facebook account
+          </button>
+        </span>
       </main>
     </div>
   );
