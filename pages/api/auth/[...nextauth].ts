@@ -6,9 +6,9 @@ export default NextAuth({
   // Configure one or more authentication providers
   providers: [
     KeycloakProvider({
-      clientId: process.env.AUTH_CLIENT_ID!,
-      clientSecret: process.env.AUTH_CLIENT_SECRET!,
-      issuer: process.env.AUTH_ISSUER
+      clientId: process.env.AUTH_CLIENT_ID_LCNC!,
+      clientSecret: process.env.AUTH_CLIENT_SECRET_LCNC!,
+      issuer: process.env.AUTH_ISSUER_LCNC!
     })
   ],
   callbacks: {

@@ -1,17 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Router from "next/router";
 
+import { init } from "../wallet";
+
 const Home: NextPage = () => {
+  const ref = useRef(false);
   const { data: session } = useSession();
   // const loading = status === "loading";
 
   useEffect(() => {
     if (!session) Router.push("/");
-    console.log(session);
+    if (!ref.current) {
+      // Avoid re-initializing
+      ref.current = true;
+      init(session?.accessToken);
+    }
   }, [session]);
 
   return (
